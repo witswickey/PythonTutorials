@@ -1,24 +1,19 @@
-print(abs(-5))
+import random
 
+print('i have a number to guess between 50-100')
+secretnumber = random.randint(50, 70)
 
-def print_swap(a, b):  # 7,4
-    a = a + b  # 11
-    b = a - b  # 7
-    a = a - b  # 4
-    print(a, b)
+for i in range(1, 7):
+    print(' guess the number')
+    num = int(input())
+    if num > secretnumber:
+        print('too high, guess lower')
+    elif num < secretnumber:
+        print('too less, guess higher ')
+    else:
+        break
 
-
-print_swap(7, 4)
-
-mod_5 = lambda x: x % 5  # Lamda functions
-
-print(max(100, 51, 14, key=mod_5))
-
-
-def roundoff(num):
-    return round(num)
-
-
-print(roundoff(9.1454785))
-
-print(len("My name is " + "Ankit"))
+if num == secretnumber:
+    print('Correct guess')
+else:
+    print('wrong guess , number was', secretnumber)

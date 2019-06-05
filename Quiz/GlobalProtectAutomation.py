@@ -1,43 +1,91 @@
+import configparser
+import os
+import time
+
 import pyautogui
 import pyperclip
-import time
 
 # print(pyautogui.position())
 
-print('Connecting to Global protect ..')
-pyautogui.click(201, 1072)
 
-time.sleep(2)
+config = configparser.RawConfigParser()
+config.read('C:\GlobalAuto.properties')
 
-pyautogui.typewrite('441993')
+RSAPass = config.get('Auth', 'global.rsakey')
+Globusername = config.get('Auth', 'global.username')
+
+print('Connecting to RSA  ..')
+# pyautogui.doubleClick(44, 158)#(x=1784, y=953)
+
+os.startfile("C:/Program Files (x86)/RSA SecurID Software Token/SecurID.exe")
+
+time.sleep(1)
+print('Supplying password')
+pyautogui.typewrite(RSAPass)
 
 pyautogui.press('enter')
 
 time.sleep(1)
+print('Copying password')
 
-pyautogui.click(532, 616)
+pyautogui.hotkey('ctrl', 'c')
 
-print(pyperclip.paste())
+time.sleep(1)  # to be removed
 
-password = pyperclip.paste()
+Rsakey = pyperclip.paste()
+print('Closing RSA with Key', Rsakey)
+pyautogui.hotkey('alt', 'F4')
 
-pyautogui.click(159, 1062)
+print('Connecting to Global Protect  .. Click')
 
-# print(pyautogui.position())
+os.startfile("C:/Program Files/Palo Alto Networks/GlobalProtect/PanGPA.exe")
 
-time.sleep(5)
+time.sleep(2)
 
-pyautogui.click(1701, 934)
+print('Click connect button')
+# pyautogui.press('enter')
+time.sleep(1)
+pyautogui.click(1746, 936)
+time.sleep(8)
+pyautogui.press('enter')
 
-time.sleep(10)
+time.sleep(8)
 
-pyautogui.click(1666, 881)
+pyautogui.hotkey('ctrl', 'a')
+pyautogui.press('delete')
+time.sleep(1)
+pyautogui.typewrite(Globusername)
+print('Click password button')
+# pyautogui.click(1729,875)
+pyautogui.press('tab')
 
-pyautogui.typewrite(password)
+time.sleep(3)
+print('Supplying paaword')
 
-pyautogui.click(1678, 954)
+pyautogui.typewrite(Rsakey)
 
-time.sleep(20)
+time.sleep(4)
+
+pyautogui.hotkey('ctrl', 'a')
+pyautogui.hotkey('ctrl', 'c')
+ifValue = ' '
+ifValue = pyperclip.paste()
+
+print('ifvalue is ', ifValue)
+
+if ifValue != ' ':
+    print('Its cool')
+    pyautogui.press('enter')
+else:
+    pyautogui.typewrite(Rsakey)
+    pyautogui.press('enter')
+
+time.sleep(4)
+
+pyautogui.hotkey('alt', 'F4')
+
+# comment here
+'''
 
 input1 = input('you wish to connect IBM also Y/N')
 print()
@@ -57,4 +105,6 @@ if input1 == 'Y' or input1 == 'y':
     time.sleep(2)
     pyautogui.press('enter')
     time.sleep(10)
-    print('Done')
+'''
+print('Enjoy!!! With Love')
+time.sleep(3)
